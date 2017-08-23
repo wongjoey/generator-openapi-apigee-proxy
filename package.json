@@ -1,0 +1,54 @@
+{
+  "name": "generator-openapi-apigee-proxy",
+  "version": "0.0.0",
+  "description": "Generates Apigee proxies from OpenAPI specifications.",
+  "homepage": "",
+  "author": {
+    "name": "Chris von See",
+    "email": "cvonsee@google.com",
+    "url": ""
+  },
+  "files": [
+    "generators"
+  ],
+  "main": "generators/index.js",
+  "keywords": [
+    "yeoman-generator"
+  ],
+  "devDependencies": {
+    "yeoman-test": "^1.6.0",
+    "yeoman-assert": "^3.0.0",
+    "nsp": "^2.6.3",
+    "eslint": "^4.1.0",
+    "eslint-config-xo-space": "^0.16.0",
+    "jest": "^19.0.2",
+    "jest-cli": "^20.0.0"
+  },
+  "dependencies": {
+    "yeoman-generator": "^1.0.0",
+    "chalk": "^1.1.3",
+    "yosay": "^2.0.0",
+    "swagger-parser": "^3.4.1",
+    "xmlbuilder": "^9.0.4",
+    "xml2js": "~0.4.19",
+    "fs-extra": "^4.0.1",
+    "async": "^2.5.0"
+  },
+  "jest": {
+    "testEnvironment": "node"
+  },
+  "scripts": {
+    "prepublish": "nsp check",
+    "pretest": "eslint . --fix",
+    "test": "jest"
+  },
+  "eslintConfig": {
+    "extends": "xo-space",
+    "env": {
+      "jest": true,
+      "node": true
+    }
+  },
+  "repository": "cvonsee/generator-openapi-apigee-proxy",
+  "license": "Apache-2.0"
+}

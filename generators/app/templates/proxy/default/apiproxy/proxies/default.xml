@@ -1,0 +1,45 @@
+<ProxyEndpoint name="default">
+  <PreFlow>
+    <Request>
+      <Step><Name>ValidateAPIKey</Name></Step>
+      <Step><Name>CheckQuota</Name></Step>
+      <Step><Name>Remove-Query-Param</Name></Step>
+    </Request>
+  </PreFlow>
+  <Flows>
+      <Flow name="Post">
+          <Description/>
+          <Request>
+              <Step>
+                  <Name>FaultScopeNoRead</Name>
+                  <Condition>scope != "REPLACE_ME"</Condition>
+              </Step>
+          </Request>
+          <Response/>
+          <Condition>(proxy.pathsuffix MatchesPath "/*") and (request.verb = "POST")</Condition>
+      </Flow>
+      <Flow name="Get">
+          <Description/>
+          <Request>
+              <Step>
+                  <Name>FaultScopeNoRead</Name>
+                  <Condition>scope != "REPLACE_ME"</Condition>
+              </Step>
+          </Request>
+          <Response/>
+          <Condition>(proxy.pathsuffix MatchesPath "/*") and (request.verb = "GET")</Condition>
+      </Flow>
+      <%- openapi_spec_flows %>
+  </Flows>
+  <HTTPProxyConnection>
+    <!-- Add a base path to the proxy to distinguish from others in the environment -->
+    <BasePath><%= basepath %></BasePath>
+    <!-- Listen on both HTTP and HTTPS endpoints -->
+    <VirtualHost>default</VirtualHost>
+    <VirtualHost>secure</VirtualHost>
+  </HTTPProxyConnection>
+  <RouteRule name="default">
+    <!-- This connects our proxy to the target defined elsewhere -->
+    <TargetEndpoint>default</TargetEndpoint>
+  </RouteRule>
+</ProxyEndpoint>
