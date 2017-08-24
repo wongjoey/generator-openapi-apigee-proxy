@@ -23,39 +23,6 @@ const policyBase = path.join(basePath, '/policies');
  * between XML docs read by xml2js and the output doc format created by xmlbuilder.  These are most
  * definitely are not a comprehensive translator - much more testing is needed.
  */
-// var parsedXmlToXmlBuilderRecursive = function (currentNodeKey, currentNodeValue, parentElement) {
-//   if (currentNodeKey === '$') {
-//     // attribute of current parent
-//     Object.keys(currentNodeValue).forEach((name) => {
-//       parentElement.att(name, currentNodeValue[name]);
-//     });
-//   } else {
-//     // child of current parent
-//     var child = parentElement.ele(currentNodeKey);
-//     // TODO this won't handle mixed text/element content
-//     if (Array.isArray(currentNodeValue)) {
-//       currentNodeValue.forEach((val) => {
-//         if (typeof val === 'string') {
-//           child.txt(val);
-//         } else if (typeof val === 'object') {
-//           Object.keys(val).forEach(valKey => {
-//             parsedXmlToXmlBuilderRecursive(valKey, val[valKey], child);
-//           });
-//         } else {
-//           var foo = typeof val;
-//           throw new Error(`Unknown array node type ${foo}`);
-//         }
-//       });
-//     } else if (currentNodeValue instanceof Map) {
-//       Object.keys(currentNodeValue).forEach((childKey) => {
-//         parsedXmlToXmlBuilderRecursive(childKey, currentNodeValue[childKey], child);
-//       });
-//     } else {
-//       throw new Error('Unknown XML object type');
-//     }
-//   }
-// }
-
 var parsedXmlToXmlBuilderRecursive = function (currentNodeKey, currentNodeValue, parentElement) {
   if (currentNodeKey === '$') {
     // attribute(s) of current parent
@@ -100,9 +67,7 @@ var parsedXmlToXmlBuilder = function (xmlIn) {
   var current = xmlIn[rootName];
 
   var xmlOut = builder.create(rootName);
-  // var currentOut = xmlOut;
   Object.keys(current).forEach((key) => {
-    // var val = current[key];
     parsedXmlToXmlBuilderRecursive(key, current[key], xmlOut);
   });
 
