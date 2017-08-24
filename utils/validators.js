@@ -4,18 +4,24 @@ var validateWithPromise = function (val, validatorFunction)
 {
   return new Promise(function (resolve, reject) {
     var result = validatorFunction(val);
-    if (result === true) {
-      resolve(result);
-    } else if (result instanceof Error) {
+    if (result instanceof Error) {
       reject(result);
+    } else if (typeof result === 'undefined') {
+      throw new Error('Undefined result from validator function');
     } else {
-      reject(new Error(result));
+      resolve(result);
     }
   });
 }
 
+var DEFAULT_EDGE_INSTANCE_NAME = 'api.enterprise.apigee.com';
+
 
 module.exports = {
+
+  getDefaultEdgeInstanceName: function() {
+    return DEFAULT_EDGE_INSTANCE_NAME;
+  },
 
   _specPathValidator: function (specPath) {
     return validateWithPromise(specPath, function (val) {

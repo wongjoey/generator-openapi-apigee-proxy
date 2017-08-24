@@ -5,5 +5,10 @@
       "authorEmail": "cvonsee@google.com",
       "authorUrl": ""
     }
+  },
+  "generator-openapi-apigee-proxy": {
+    "promptValues": {
+      "deploy": false
+    }
   }
 }

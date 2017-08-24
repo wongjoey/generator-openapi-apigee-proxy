@@ -4,12 +4,8 @@ var parser = require('swagger-parser');
 const VENDOR_EXTENSION_PREFIX = 'x-';
 
 module.exports = {
-  parse: function (specPath, cb) {
-    parser.parse(specPath, function (err, api, metadata) {
-      if (err) {
-        cb(err);
-      }
-
+  parse: function (specPath) {
+    return parser.validate(specPath).then((api) => {
       var pathObjects = [];
       var vendorExtensions = {};
 
@@ -53,8 +49,7 @@ module.exports = {
         pathObjects.push(path);
       });
 
-
-      var result = {
+      var parseResult = {
         title: api.info.title,
         version: api.info.version,
         desc: api.info.description,
@@ -65,7 +60,7 @@ module.exports = {
         vendorExtensions: vendorExtensions
       };
 
-      cb(null, result);
+      return parseResult;
     });
   }
-}
+};

@@ -29,11 +29,10 @@
           <Response/>
           <Condition>(proxy.pathsuffix MatchesPath "/*") and (request.verb = "GET")</Condition>
       </Flow>
-      <%- openapi_spec_flows %>
   </Flows>
   <HTTPProxyConnection>
     <!-- Add a base path to the proxy to distinguish from others in the environment -->
-    <BasePath><%= basepath %></BasePath>
+    <BasePath></BasePath>
     <!-- Listen on both HTTP and HTTPS endpoints -->
     <VirtualHost>default</VirtualHost>
     <VirtualHost>secure</VirtualHost>

@@ -4,6 +4,7 @@ const chalk = require('chalk');
 const yosay = require('yosay');
 const fs = require('fs');
 const path = require('path');
+const _ = require('lodash');
 const async = require('async');
 
 const validators = require('../../utils/validators.js');
@@ -14,7 +15,111 @@ function doDeployProcessing(answerHash) {
   return answerHash.deploy;
 }
 
-
+// Note that option names must be the same as prompt names!
+const options = [
+  {
+    type: (val) => {
+      if (validators._specPathValidator(val)) {
+        return val;
+      } else {
+        throw new Error('Invalid spec path value');
+      }
+    },
+    name: 'specPath',
+    desc: 'Complete path to the OpenAPI spec file'
+  },
+  {
+    type: (val) => {
+      if (validators._destPathValidator(val)) {
+        return val;
+      } else {
+        throw new Error('Invalid source path value');
+      }
+    },
+    name: 'sourcePath',
+    desc: 'Complete path of the directory containing your proxy template'
+  },
+  {
+    type: (val) => {
+      if (validators._destPathValidator(val)) {
+        return val;
+      } else {
+        throw new Error('Invalid destination path value');
+      }
+    },
+    name: 'destPath',
+    desc: 'Complete path of the directory to contain the generated proxy'
+  },
+  {
+    type: (val) => {
+      return val;
+    },
+    name: 'deploy',
+    desc: 'If true, the generator will automatically deploy your proxy'
+  },
+  {
+    type: (val) => {
+      if (validators._edgeUriValidator(val)) {
+        return val;
+      } else {
+        throw new Error('Invalid Edge URI value');
+      }
+    },
+    name: 'baseuri',
+    desc: 'Base URI of your Apigee Edge instance'
+  },
+  {
+    type: (val) => {
+      if (validators._orgNameValidator(val)) {
+        return val;
+      } else {
+        throw new Error('Invalid Edge org name value');
+      }
+    },
+    name: 'org',
+    desc: 'Name of your Apigee Edge organization'
+  },
+  {
+    type: (val) => {
+      if (validators._envNameValidator(val)) {
+        return val;
+      } else {
+        throw new Error('Invalid Edge environment name value');
+      }
+    },
+    name: 'env',
+    desc: 'Name of your Apigee Edge environment'
+  },
+  {
+    type: (val) => {
+      if (validators._vhValidator(val)) {
+        return val;
+      } else {
+        throw new Error('Invalid Edge virtual host name value');
+      }
+    },
+    name: 'vh',
+    desc: 'Name of your Apigee Edge virtual host'
+  },
+  {
+    type: (val) => {
+      if (validators._useridValidator(val)) {
+        return val;
+      } else {
+        throw new Error('Invalid Edge user name value');
+      }
+    },
+    name: 'username',
+    desc: 'Apigee Edge userid'
+  },
+  {
+    type: (val) => {
+      return val;
+    },
+    name: 'password',
+    desc: 'Apigee Edge password'
+  }
+];
 
 module.exports = class extends Generator {
   constructor(args, options) {
@@ -22,7 +127,10 @@ module.exports = class extends Generator {
   }
 
   initializing() {
-
+    // Load the command line options
+    options.forEach((opt) => {
+      this.option(opt.name, opt);
+    });
   }
 
   prompting() {
@@ -31,32 +139,63 @@ module.exports = class extends Generator {
       'Welcome to the unreal ' + chalk.red('generator-openapi-apigee-proxy') + ' generator!'
     ));
 
+    var self = this;
+
+    // Note that prompt names must be the same as option names!
     const prompts = [
       {
         type: 'input',
         name: 'specPath',
         message: 'Enter the complete path to the OpenAPI spec file',
-        validate: validators._specPathValidator
+        validate: validators._specPathValidator,
+        when: function (answerHash) {
+          return new Promise(function(resolve, reject) {
+            resolve((typeof self.options.specPath === 'undefined') &&
+              (typeof self.options.config === 'undefined'));
+          });
+        },
+        store: false
       },
       {
         type: 'input',
         name: 'sourcePath',
         message: 'Enter the complete path of the directory containing your proxy template',
         default: this.templatePath('proxy/default'),
-        validate: validators._destPathValidator
+        validate: validators._destPathValidator,
+        when: function (answerHash) {
+          return new Promise(function(resolve, reject) {
+            resolve((typeof self.options.sourcePath === 'undefined') &&
+              (typeof self.options.config === 'undefined'));
+          });
+        },
+        store: false
       },
       {
         type: 'input',
         name: 'destPath',
         message: 'Enter the complete path of the directory to contain the generated proxy',
         default: this.destinationPath(),
-        validate: validators._destPathValidator
+        validate: validators._destPathValidator,
+        when: function (answerHash) {
+          return new Promise(function(resolve, reject) {
+            resolve((typeof self.options.destPath === 'undefined') &&
+              (typeof self.options.config === 'undefined'));
+          });
+        },
+        store: false
       },
       {
         type: 'confirm',
         name: 'deploy',
         message: 'Should the generator automatically deploy your proxy?',
-        default: false
+        default: false,
+        when: function (answerHash) {
+          return new Promise(function(resolve, reject) {
+            resolve((typeof self.options.deploy === 'undefined') &&
+              (typeof self.options.config === 'undefined'));
+          });
+        },
+        store: true
       },
       {
         type: 'input',
@@ -66,9 +205,12 @@ module.exports = class extends Generator {
         validate: validators._edgeUriValidator,
         when: function (answerHash) {
           return new Promise(function(resolve, reject) {
-            resolve(doDeployProcessing(answerHash));
+            resolve((typeof self.options.config === 'undefined') &&
+              (typeof self.options.baseuri === 'undefined') &&
+              doDeployProcessing(answerHash));
           });
-        }
+        },
+        store: true
       },
       {
         type: 'input',
@@ -77,9 +219,12 @@ module.exports = class extends Generator {
         validate: validators._orgNameValidator,
         when: function (answerHash) {
           return new Promise(function(resolve, reject) {
-            resolve(doDeployProcessing(answerHash));
+            resolve((typeof self.options.config === 'undefined') &&
+              (typeof self.options.org === 'undefined') &&
+              doDeployProcessing(answerHash));
           });
-        }
+        },
+        store: true
       },
       {
         type: 'input',
@@ -88,9 +233,12 @@ module.exports = class extends Generator {
         validate: validators._envNameValidator,
         when: function (answerHash) {
           return new Promise(function(resolve, reject) {
-            resolve(doDeployProcessing(answerHash));
+            resolve((typeof self.options.config === 'undefined') &&
+              (typeof self.options.env === 'undefined') &&
+              doDeployProcessing(answerHash));
           });
-        }
+        },
+        store: true
       },
       {
         type: 'input',
@@ -99,9 +247,12 @@ module.exports = class extends Generator {
         validate: validators._vhValidator,
         when: function (answerHash) {
           return new Promise(function(resolve, reject) {
-            resolve(doDeployProcessing(answerHash));
+            resolve((typeof self.options.config === 'undefined') &&
+              (typeof self.options.vh === 'undefined') &&
+              doDeployProcessing(answerHash));
           });
-        }
+        },
+        store: true
       },
       {
         type: 'input',
@@ -110,9 +261,12 @@ module.exports = class extends Generator {
         validate: validators._useridValidator,
         when: function (answerHash) {
           return new Promise(function(resolve, reject) {
-            resolve(doDeployProcessing(answerHash));
+            resolve((typeof self.options.config === 'undefined') &&
+              (typeof self.options.username === 'undefined') &&
+              doDeployProcessing(answerHash));
           });
-        }
+        },
+        store: true
       },
       {
         type: 'password',
@@ -121,29 +275,28 @@ module.exports = class extends Generator {
         validate: validators._passwordValidator,
         when: function (answerHash) {
           return new Promise(function(resolve, reject) {
-            resolve(doDeployProcessing(answerHash));
+            resolve((typeof self.options.config === 'undefined') &&
+              (typeof self.options.password === 'undefined') &&
+              doDeployProcessing(answerHash));
           });
-        }
+        },
+        store: false
       }
     ];
 
-    // TODO I still don't quite understand why "this" isn't available in the then() function below...
-    var self = this;
-
     return this.prompt(prompts).then(props => {
+      self.props = _.merge({}, self.options, props);
+
       // munge
-      if (props.specPath.startsWith('\'') && props.specPath.endsWith('\'')) {
-        props.specPath = props.specPath.substring(1, props.specPath.length - 1);
+      if (self.props.specPath.startsWith('\'') && self.props.specPath.endsWith('\'')) {
+        self.props.specPath = self.props.specPath.substring(1, self.props.specPath.length - 1);
       }
-      if (props.sourcePath.startsWith('\'') && props.sourcePath.endsWith('\'')) {
-        props.sourcePath = props.sourcePath.substring(1, props.sourcePath.length - 1);
+      if (self.props.sourcePath.startsWith('\'') && self.props.sourcePath.endsWith('\'')) {
+        self.props.sourcePath = self.props.sourcePath.substring(1, self.props.sourcePath.length - 1);
       }
-      if (props.destPath.startsWith('\'') && props.destPath.endsWith('\'')) {
-        props.destPath = props.destPath.substring(1, props.destPath.length - 1);
+      if (self.props.destPath.startsWith('\'') && self.props.destPath.endsWith('\'')) {
+        self.props.destPath = self.props.destPath.substring(1, self.props.destPath.length - 1);
       }
-      // To access props later use this.props.someAnswer;
-      self.props = props;
-      // this.props = props;
     });
   }
 
@@ -156,92 +309,41 @@ module.exports = class extends Generator {
   }
 
   writing() {
-    // this.fs.copy(
-    //   this.templatePath('dummyfile.txt'),
-    //   this.destinationPath('dummyfile.txt')
-    // );
-
     this.log(`Building completed template from swagger ${this.props.specPath} and proxy ${this.props.sourcePath}`);
 
-    try {
-      var foo = this.fs.read(this.props.specPath);
-      this.log(`${foo}`);
-    }
-    catch(err) {
-      throw new Error(`Swagger file ${this.props.specPath} is invalid or does not exist.`);
-    }
+    var self = this;
 
-    swaggerutils.parse(this.props.specPath, (err, swaggerInfo) => {
-      this.sourceRoot(this.props.sourcePath);
-      this.destinationRoot(this.props.destPath);
-
-      // Discovered that this.templatePath() and this.destinationPath() don't work when
-      // their arguments are the results of functions - they only work with literals.
-      // Go figure.
-
-      var self = this;
-
-      async.series([
-        function (cb) {
-          // Before creating proxy and target endpoints, copy all of the policies and resources
-          // from source to target.  We'll keep references to these in the proxy and target endpoints
-          // we create.
-          proxyutils.copyFromFileSystem(
-            path.join(self.props.sourcePath, proxyutils.getPolicyBase(), '/'),
-            path.join(self.props.destPath + proxyutils.getPolicyBase())
-          );
-          proxyutils.copyFromFileSystem(
-            path.join(self.props.sourcePath, proxyutils.getResourceBase(), '/'),
-            path.join(self.props.destPath + proxyutils.getResourceBase())
-          );
-
-          cb(null);
-        },
-        function (cb) {
-          // create the proxy descriptor from the template
-          proxyutils.updateProxyDescriptor(
-            path.join(self.props.sourcePath, proxyutils.getBasePath(), 'PublicAPI.xml'),
-            path.join(self.props.destPath + proxyutils.getResourceBase()),
-            swaggerInfo,
-            cb
-          );
-        },
-        function (cb) {
-          // create the proxy endpoint(s) from the template
-          proxyutils.createOrUpdateProxyEndpoints(
-            path.join(self.props.sourcePath, proxyutils.getProxyBase(), 'default.xml'),
-            path.join(self.props.destPath, proxyutils.getProxyBase()),
-            swaggerInfo,
-            cb
-          );
-        },
-        function (cb) {
-          // create the target(s) from the template
-          proxyutils.createOrUpdateTargetEndpoints(
-            path.join(self.props.sourcePath, proxyutils.getTargetBase(), 'default.xml'),
-            path.join(self.props.destPath, proxyutils.getTargetBase()),
-            swaggerInfo,
-            cb
-          );
-        }
-      ],
-      function(err, results) {
-        // results is now equal to ['one', 'two']
+    // convert the spec into a swaggerInfo object
+    return swaggerutils.parse(self.props.specPath)
+      .then((swaggerInfo) => {
+        // generate the proxy
+        proxyutils.generateProxy(self.props.sourcePath, self.props.destPath, swaggerInfo, self.props, function(err, results) {
+          if (err) {
+            throw err;
+          }
+        });
       });
-    });
   }
 
+  /**
   conflicts() {
 
   }
+   **/
 
   install() {
     // this.npmInstall();
-    if (doDeployProcessing(this.props)) {
-      this.log('Doing deploy processing!');
-    } else {
-      this.log('Not doing deploy processing!');
-    }
+    var self = this;
+
+    return new Promise(function(resolve, reject) {
+      if (doDeployProcessing(self.props)) {
+        self.log('Doing deploy processing!');
+      } else {
+        self.log('Not doing deploy processing!');
+      }
+
+      resolve();
+    });
   }
 
   end() {
