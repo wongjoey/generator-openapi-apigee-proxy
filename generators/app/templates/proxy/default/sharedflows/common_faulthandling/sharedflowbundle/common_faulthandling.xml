@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<SharedFlowBundle revision="1" name="common_faulthandling">
+    <ConfigurationVersion majorVersion="4" minorVersion="0"/>
+    <CreatedAt>1498094176346</CreatedAt>
+    <CreatedBy>trial@apigee.com</CreatedBy>
+    <Description>Generic fault handling</Description>
+    <DisplayName>common_faulthandling</DisplayName>
+    <LastModifiedAt>1498105590125</LastModifiedAt>
+    <LastModifiedBy>trial@apigee.com</LastModifiedBy>
+    <Policies>
+        <Policy>cp_AssignMessage.Fault.SetJSONTemplateMessage</Policy>
+        <Policy>cp_AssignMessage.Fault.SetXMLTemplateMessage</Policy>
+        <Policy>cp_AssignMessageInitializeFaultVariables</Policy>
+        <Policy>cp_JSGenericFaultHandling</Policy>
+        <Policy>cp_MessageLoggingLogger</Policy>
+        <Policy>cp_setlogmessage</Policy>
+    </Policies>
+    <Resources>
+        <Resource>jsc://cp_JS.GenericFaultHandling.js</Resource>
+        <Resource>jsc://cp_setlogmessage.js</Resource>
+    </Resources>
+    <Spec></Spec>
+    <subType>SharedFlow</subType>
+    <validate>false</validate>
+    <SharedFlows>
+        <SharedFlow>default</SharedFlow>
+    </SharedFlows>
+</SharedFlowBundle>

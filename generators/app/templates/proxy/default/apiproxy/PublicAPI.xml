@@ -1,4 +1,10 @@
 <APIProxy name="PublicAPI">
   <!-- This is the root of the application -->
   <Description>A sample application that adds API key-based authentication</Description>
+  <ProxyEndpoints>
+    <ProxyEndpoint>default</ProxyEndpoint>
+  </ProxyEndpoints>
+  <TargetEndpoints>
+    <TargetEndpoint>default</TargetEndpoint>
+  </TargetEndpoints>
 </APIProxy>

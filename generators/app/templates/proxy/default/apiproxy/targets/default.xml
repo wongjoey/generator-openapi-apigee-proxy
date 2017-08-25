@@ -1,4 +1,16 @@
 <TargetEndpoint name="default">
+  <PreFlow>
+    <Request></Request>
+    <Response/>
+  </PreFlow>
+  <Flows>
+    <Flow name="templateFlow">
+      <Description/>
+      <Request></Request>
+      <Response/>
+      <Condition>(proxy.pathsuffix MatchesPath "/*") and (request.verb = "POST")</Condition>
+    </Flow>
+  </Flows>
   <HTTPTargetConnection>
     <!-- This is where we define the target. For this sample we just use a simple URL. -->
     <URL>http://mocktarget.apigee.net/</URL>

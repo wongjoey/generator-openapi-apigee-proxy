@@ -1,33 +1,30 @@
 <ProxyEndpoint name="default">
+  <FaultRules>
+    <FaultRule name="Generic Fault Handling">
+      <Step>
+        <Name>FlowCallout.common_faulthandling</Name>
+      </Step>
+    </FaultRule>
+  </FaultRules>
+  <DefaultFaultRule name="Default fault handling">
+    <Step>
+      <Name>Default-message</Name>
+    </Step>
+  </DefaultFaultRule>
   <PreFlow>
     <Request>
-      <Step><Name>ValidateAPIKey</Name></Step>
-      <Step><Name>CheckQuota</Name></Step>
-      <Step><Name>Remove-Query-Param</Name></Step>
+      <Step>
+        <Name>FlowCallout.common_preflow_apikey</Name>
+      </Step>
     </Request>
   </PreFlow>
   <Flows>
-      <Flow name="Post">
+      <Flow name="templateFlow">
           <Description/>
           <Request>
-              <Step>
-                  <Name>FaultScopeNoRead</Name>
-                  <Condition>scope != "REPLACE_ME"</Condition>
-              </Step>
           </Request>
           <Response/>
           <Condition>(proxy.pathsuffix MatchesPath "/*") and (request.verb = "POST")</Condition>
-      </Flow>
-      <Flow name="Get">
-          <Description/>
-          <Request>
-              <Step>
-                  <Name>FaultScopeNoRead</Name>
-                  <Condition>scope != "REPLACE_ME"</Condition>
-              </Step>
-          </Request>
-          <Response/>
-          <Condition>(proxy.pathsuffix MatchesPath "/*") and (request.verb = "GET")</Condition>
       </Flow>
   </Flows>
   <HTTPProxyConnection>

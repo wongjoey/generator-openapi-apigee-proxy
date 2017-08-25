@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<SharedFlow name="default">
+    <Step>
+        <Name>cp_spikearrest</Name>
+    </Step>
+    <Step>
+        <Name>cp_setlogmessage</Name>
+    </Step>
+    <Step>
+        <Name>cp_verifyapikey</Name>
+    </Step>
+    <Step>
+        <Name>cp_remove_apikey</Name>
+    </Step>
+</SharedFlow>

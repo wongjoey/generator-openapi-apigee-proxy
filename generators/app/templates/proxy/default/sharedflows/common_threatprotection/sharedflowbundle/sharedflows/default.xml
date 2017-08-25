@@ -1,0 +1,39 @@
+<SharedFlow name="default">
+	<!-- Security policies BEGINING -->
+	<Step>
+		<FaultRules />
+		<Name>cp_JSONThreatProtection.DoSAEvaluation</Name>
+		<Condition>request.verb != "GET"</Condition>
+	</Step>
+	<Step>
+		<FaultRules />
+		<Name>cp_XMLThreatProtection.DoSAEvaluation</Name>
+		<Condition>request.verb != "GET"</Condition>
+	</Step>
+	<Step>
+		<FaultRules />
+		<Name>cp_JS.SQLInjectionEvaluation</Name>
+		<Condition>request.verb != "GET"</Condition>
+	</Step>
+	<Step>
+		<FaultRules />
+		<Name>cp_JS.ServerSideIncludeInjectionEvaluation</Name>
+		<Condition>request.verb != "GET"</Condition>
+	</Step>
+	<Step>
+		<FaultRules />
+		<Name>cp_JS.JavaScriptInjectionEvaluation</Name>
+		<Condition>request.verb != "GET"</Condition>
+	</Step>
+	<Step>
+		<FaultRules />
+		<Name>cp_JS.XPathSyntaxInjectionEvaluation</Name>
+		<Condition>request.verb != "GET"</Condition>
+	</Step>
+	<Step>
+		<FaultRules />
+		<Condition>threatProtectionEvaluationStatus == "failed"</Condition>
+		<Name>cp_RaiseFault.RedirectToDefaultFaultHandling</Name>
+	</Step>
+	<!-- Security policies END -->
+</SharedFlow>	

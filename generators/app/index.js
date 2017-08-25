@@ -2,10 +2,7 @@
 const Generator = require('yeoman-generator');
 const chalk = require('chalk');
 const yosay = require('yosay');
-const fs = require('fs');
-const path = require('path');
 const _ = require('lodash');
-const async = require('async');
 
 const validators = require('../../utils/validators.js');
 const proxyutils = require('../../utils/proxyutils.js');
@@ -131,6 +128,7 @@ module.exports = class extends Generator {
     options.forEach((opt) => {
       this.option(opt.name, opt);
     });
+    // TODO Add "config" option to "options" array and add logic to read option/prompt values from config file.
   }
 
   prompting() {
@@ -321,6 +319,8 @@ module.exports = class extends Generator {
           if (err) {
             throw err;
           }
+          // 'results' is the path to the proxy
+          // TODO zip the proxy and place in output directory.
         });
       });
   }
@@ -336,6 +336,7 @@ module.exports = class extends Generator {
     var self = this;
 
     return new Promise(function(resolve, reject) {
+      // TODO deploy logic
       if (doDeployProcessing(self.props)) {
         self.log('Doing deploy processing!');
       } else {

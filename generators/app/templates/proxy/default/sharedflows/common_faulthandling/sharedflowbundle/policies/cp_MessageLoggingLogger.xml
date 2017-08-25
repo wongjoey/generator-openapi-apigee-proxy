@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<MessageLogging async="false" continueOnError="false" enabled="true" name="cp_MessageLoggingLogger">
+    <DisplayName>cp_MessageLogging.Logger</DisplayName>
+    <File>
+        <Message> {system.time} | timestampinmillis = {system.timestamp} | {logging.loglevel} | envName = {environment.name} | service = {apiproxy.name} | APIKey = {client_id} | AppName = {developer.app.name} | {logging.message}
+    </Message>
+        <FileName>apilogging.log</FileName>
+        <FileRotationOptions rotateFileOnStartup="true">
+            <FileRotationType>TIME</FileRotationType>
+            <RotationFrequency unit="minute">10</RotationFrequency>
+            <MaxFilesToRetain>10</MaxFilesToRetain>
+        </FileRotationOptions>
+    </File>
+</MessageLogging>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<AssignMessage async="false" continueOnError="false" enabled="true" name="cp_AssignMessage.Fault.SetJSONTemplateMessage">
+    <FaultRules/>
+    <Properties/>
+    <Set>
+        <Payload contentType="application/json" variablePrefix="%" variableSuffix="#">{
+			   "RequestError": {
+					 "ExceptionType":"%custom.error.exceptionType#",
+					 "MessageId":"%custom.error.messageId#",
+					 "Text":"%custom.error.messageText#",
+					 "Variables":"%custom.error.messageVariables#"
+			   }
+			}</Payload>
+        <StatusCode>{custom.error.code}</StatusCode>
+        <ReasonPhrase>{custom.error.reasonphrase}</ReasonPhrase>
+    </Set>
+    <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+    <AssignTo createNew="false" transport="http" type="response"/>
+</AssignMessage>

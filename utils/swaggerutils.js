@@ -35,6 +35,7 @@ module.exports = {
 
             var operation = {};
             operation.verb = verbKey;
+            operation.description = (verbValue.description) ? verbValue.description : '';
             operation.consumes = (verbValue.consumes) ? verbValue.consumes : [];
             operation.produces = (verbValue.produces) ? verbValue.produces : [];
             operation.responseStatusCodes = [];

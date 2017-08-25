@@ -1,12 +1,12 @@
 'use strict';
-const builder = require('xmlbuilder');
-const xmlparser = require('xml2js').parseString;
 const fse = require('fs-extra');
 const async = require('async');
 const _ = require('lodash');
-const fs = require('fs');
 const path = require('path');
 
+const xmlutils = require('./xmlutils.js');
+
+const sharedFlowBase = '/sharedflows';
 const basePath = '/apiproxy';
 const proxyBase = path.join(basePath, '/proxies');
 const targetBase = path.join(basePath, '/targets');
@@ -19,70 +19,60 @@ const javaResourceBase = path.join(resourceBase, "/java");
 const policyBase = path.join(basePath, '/policies');
 
 /**
- * Since xml2js doesn't write :( the following 'parsedXmlTo...' functions were created to translate
- * between XML docs read by xml2js and the output doc format created by xmlbuilder.  These are most
- * definitely are not a comprehensive translator - much more testing is needed.
+ * This module is specifically designed to support the auto-creation of proxy code that implements Apigee best
+ * practices in the following areas:
+ *
+ * -- Error handling
+ * -- Generic flow after all other flows to catch requests that fall through
+ * -- Authentication and authorization
+ * -- Traffic management (particularly setting of SpikeArrest value)
+ * -- Threat detection and mitigation
+ * -- External configurability of proxy behavior (via properties in API Product, Developer and App definitions, or
+ *    via encrypted KVM)
+ * -- JWT handling
+ * -- Default flow handling (when no conditional flows match)
+ * -- Shared Flows usage
+ * -- Target Server usage
+ *
+ * Things I'd like to at least consider covering, but may not be implementable here:
+ *
+ * -- BaaS access
+ * -- Custom analytics
+ * -- Caching
+ * -- Mock target generation
+ *
+ * Also:
+ *
+ * -- Generating SmartDocs from OpenAPI specs (suggested by Nandan Sridhar)
+ * -- Test case generation
  */
-var parsedXmlToXmlBuilderRecursive = function (currentNodeKey, currentNodeValue, parentElement) {
-  if (currentNodeKey === '$') {
-    // attribute(s) of current parent
-    Object.keys(currentNodeValue).forEach((name) => {
-      parentElement.att(name, currentNodeValue[name]);
-    });
-  } else {
-    // child(ren) of current parent
-    // TODO this won't handle mixed text/element content
-    var child = null;
-    if (Array.isArray(currentNodeValue)) {
-      currentNodeValue.forEach((val) => {
-        child = parentElement.ele(currentNodeKey);
-        if (typeof val === 'string') {
-          child.txt(val);
-        } else if (typeof val === 'object') {
-          Object.keys(val).forEach(valKey => {
-            parsedXmlToXmlBuilderRecursive(valKey, val[valKey], child);
-          });
-        } else {
-          var foo = typeof val;
-          throw new Error(`Unknown array node type ${foo}`);
-        }
-      });
-    } else if (currentNodeValue instanceof Map) {
-      child = parentElement.ele(currentNodeKey);
-      Object.keys(currentNodeValue).forEach((childKey) => {
-        parsedXmlToXmlBuilderRecursive(childKey, currentNodeValue[childKey], child);
-      });
-    } else {
-      throw new Error('Unknown XML object type');
-    }
-  }
-}
-
-var parsedXmlToXmlBuilder = function (xmlIn) {
-  var roots = Object.keys(xmlIn);
-  if (roots.length > 1) {
-    throw new Error('Illegal XML document');
-  }
-  var rootName = roots[0];
-  var current = xmlIn[rootName];
-
-  var xmlOut = builder.create(rootName);
-  Object.keys(current).forEach((key) => {
-    parsedXmlToXmlBuilderRecursive(key, current[key], xmlOut);
-  });
-
-  return xmlOut;
-}
 
 var updateProxyDescriptor = function (templateSourceFile, destPath, swaggerInfo, cb) {
   var xml = fse.readFileSync(templateSourceFile).toString();
 
-  xmlparser(xml, function (err, result) {
+  xmlutils.parseXML(xml, function (err, result) {
     if (err) {
       cb(err, null);
     }
 
-    var xmlDoc = parsedXmlToXmlBuilder(result);
+    var rootElement = result[Object.keys(result)[0]];
+
+    // Update the base path (why is it plural "basepaths" in the proxy?)
+    xmlutils.createOrUpdateElement(rootElement, 'Basepaths', swaggerInfo.basePath, true, false);
+    // Update the description
+    xmlutils.createOrUpdateElement(rootElement, 'Description', swaggerInfo.desc, true, false);
+    // Update createdat and lastmodifiedat (Linux time stamp)
+    var now = Date.now().valueOf();
+    xmlutils.createOrUpdateElement(rootElement, 'CreatedAt', now, true, false);
+    xmlutils.createOrUpdateElement(rootElement, 'LastModifiedAt', now, true, false);
+    // Updated createdby and lastmodifiedby
+    xmlutils.createOrUpdateElement(rootElement, 'CreatedBy', now, true, false);
+    xmlutils.createOrUpdateElement(rootElement, 'LastModifiedBy', now, true, false);
+    // Update display name
+    var displayName = (swaggerInfo.title) ? swaggerInfo.title.replace(new RegExp(' '), '_') : swaggerInfo.basePath;
+    xmlutils.createOrUpdateElement(rootElement, 'DisplayName', displayName, true, false);
+
+    var xmlDoc = xmlutils.parsedXmlToXmlBuilder(result);
     var xmlString = xmlDoc.end({ pretty: true });
     fse.writeFileSync(destPath, xmlString);
 
@@ -93,12 +83,36 @@ var updateProxyDescriptor = function (templateSourceFile, destPath, swaggerInfo,
 var createOrUpdateProxyEndpoints = function (templateSourceFile, destPath, swaggerInfo, cb) {
   var xml = fse.readFileSync(templateSourceFile).toString();
 
-  xmlparser(xml, function (err, result) {
+  xmlutils.parseXML(xml, function (err, result) {
     if (err) {
       cb(err, null);
     }
 
-    var xmlDoc = parsedXmlToXmlBuilder(result);
+    // Update flows based on what's in the OpenAPI spec
+    var flowsElement = xmlutils.getElementByPath(result, '$.ProxyEndpoint.Flows');
+    var templateFlow = xmlutils.getElementByPath(flowsElement, 'Flow');
+    templateFlow = templateFlow[0];
+    xmlutils.removeChild(flowsElement, 'Flow');
+
+    var newFlows = [];
+    swaggerInfo.pathObjects.forEach(pathObject => {
+      pathObject.operations.forEach(pathOperation => {
+        var newFlow = _.cloneDeep(templateFlow);
+        xmlutils.createOrUpdateElementAttribute(newFlow, 'name', ((newFlows.length) + '_' + pathOperation.verb), true);
+        xmlutils.createOrUpdateElement(newFlow, 'Description', pathOperation.description, true);
+        var condition = `((request.verb = \'${pathOperation.verb}\') and (proxy.pathsuffix MatchesPath \'${pathObject.subpath}\'))`
+        xmlutils.createOrUpdateElement(newFlow, 'Condition', condition, true);
+        newFlows.push(newFlow);
+      });
+    });
+
+    xmlutils.createOrUpdateElement(flowsElement, 'Flow', newFlows, true);
+
+    // Update the base path
+    var httpTargetConnElem = xmlutils.getElementByPath(result, '$.ProxyEndpoint.HTTPProxyConnection');
+    xmlutils.createOrUpdateElement(httpTargetConnElem, 'BasePath', swaggerInfo.basePath, true);
+
+    var xmlDoc = xmlutils.parsedXmlToXmlBuilder(result);
     var xmlString = xmlDoc.end({ pretty: true });
     fse.writeFileSync(destPath, xmlString);
 
@@ -109,12 +123,12 @@ var createOrUpdateProxyEndpoints = function (templateSourceFile, destPath, swagg
 var createOrUpdateTargetEndpoints = function (templateSourceFile, destPath, swaggerInfo, cb) {
   var xml = fse.readFileSync(templateSourceFile).toString();
 
-  xmlparser(xml, function (err, result) {
+  xmlutils.parseXML(xml, function (err, result) {
     if (err) {
       cb(err, null);
     }
 
-    var xmlDoc = parsedXmlToXmlBuilder(result);
+    var xmlDoc = xmlutils.parsedXmlToXmlBuilder(result);
     var xmlString = xmlDoc.end({ pretty: true });
     fse.writeFileSync(destPath, xmlString);
 
@@ -144,9 +158,10 @@ module.exports = {
         }
       },
       function (cb) {
-        // Before creating proxy and target endpoints, copy all of the policies and resources
+        // Before creating proxy and target endpoints, copy all of the existing policies and resources
         // from source to target.  We'll keep references to these in the proxy and target endpoints
         // we create.
+        // TODO Consider if we need to add logic to only copy *referenced* policies and resources instead of everything in the template.
         copyFromFileSystem(
           path.join(sourcePath, policyBase, '/'),
           path.join(destPath + policyBase)
@@ -154,6 +169,16 @@ module.exports = {
         copyFromFileSystem(
           path.join(sourcePath, resourceBase, '/'),
           path.join(destPath, resourceBase)
+        );
+
+        cb(null);
+      },
+      function (cb) {
+        // If a "sharedflows" directory exists in the template directory, then copy those shared flows too
+        // TODO Consider if we need to add logic to only copy *referenced* shared flows and resources instead of everything in the template.
+        copyFromFileSystem(
+          path.join(sourcePath, sharedFlowBase, '/'),
+          path.join(destPath + sharedFlowBase)
         );
 
         cb(null);

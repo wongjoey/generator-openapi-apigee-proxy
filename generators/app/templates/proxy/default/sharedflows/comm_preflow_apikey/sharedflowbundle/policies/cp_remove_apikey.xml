@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<AssignMessage async="false" continueOnError="false" enabled="true" name="cp_remove_apikey">
+    <DisplayName>cp_remove_apikey</DisplayName>
+    <Remove>
+        <Headers>
+            <Header name="request.header.apikey"/>
+        </Headers>
+        <QueryParams>
+            <QueryParam name="apikey"/>
+        </QueryParams>
+    </Remove>
+    <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+    <AssignTo createNew="false" transport="http" type="request"/>
+</AssignMessage>

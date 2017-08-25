@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<SpikeArrest async="false" continueOnError="false" enabled="true" name="cp_spikearrest">
+    <DisplayName>cp_spikearrest</DisplayName>
+    <Rate ref="apiproduct.ratelimit_per_second"/>
+</SpikeArrest>

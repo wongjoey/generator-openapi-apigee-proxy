@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<AssignMessage async="false" continueOnError="false" enabled="true" name="cp_AssignMessage.Fault.SetXMLTemplateMessage">
+    <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+    <Set>
+        <Payload contentType="application/xml" variablePrefix="%" variableSuffix="#">
+            <RequestError>
+                <ExceptionType>%custom.error.exceptionType#</ExceptionType>
+                <MessageId>%custom.error.messageId#</MessageId>
+                <Text>%custom.error.messageText#</Text>
+                <Variables>%custom.error.messageVariables#</Variables>
+            </RequestError>
+        </Payload>
+        <StatusCode>{custom.error.code}</StatusCode>
+        <ReasonPhrase>{custom.error.reasonphrase}</ReasonPhrase>
+    </Set>
+</AssignMessage>

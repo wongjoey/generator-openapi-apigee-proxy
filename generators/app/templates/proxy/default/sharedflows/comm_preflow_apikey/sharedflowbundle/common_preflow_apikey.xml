@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<SharedFlowBundle revision="1" name="common_preflow_apikey">
+    <ConfigurationVersion majorVersion="4" minorVersion="0"/>
+    <CreatedAt>1498094135648</CreatedAt>
+    <CreatedBy>trial@apigee.com</CreatedBy>
+    <Description>Common Preflow logic for API Key validation.</Description>
+    <DisplayName>common_preflow_apikey</DisplayName>
+    <LastModifiedAt>1498200192026</LastModifiedAt>
+    <LastModifiedBy>trial@apigee.com</LastModifiedBy>
+    <Policies>
+        <Policy>cp_remove_apikey</Policy>
+        <Policy>cp_setlogmessage</Policy>
+        <Policy>cp_spikearrest</Policy>
+        <Policy>cp_verifyapikey</Policy>
+    </Policies>
+    <Resources>
+        <Resource>jsc://cp_setlogmessage.js</Resource>
+    </Resources>
+    <Spec></Spec>
+    <subType>SharedFlow</subType>
+    <validate>false</validate>
+    <SharedFlows>
+        <SharedFlow>default</SharedFlow>
+    </SharedFlows>
+</SharedFlowBundle>

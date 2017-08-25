@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Javascript async="false" continueOnError="false" enabled="true" timeLimit="200" name="cp_JSGenericFaultHandling">
+    <DisplayName>cp_JS.GenericFaultHandling</DisplayName>
+    <Properties/>
+    <ResourceURL>jsc://cp_JS.GenericFaultHandling.js</ResourceURL>
+</Javascript>

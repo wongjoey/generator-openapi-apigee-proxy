@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<FlowCallout async="false" continueOnError="false" enabled="true" name="FlowCallout.common_preflow_apikey">
+    <DisplayName>FlowCallout.common_preflow_apikey</DisplayName>
+    <FaultRules/>
+    <Properties/>
+    <SharedFlowBundle>common_preflow_apikey</SharedFlowBundle>
+</FlowCallout>

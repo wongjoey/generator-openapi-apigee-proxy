@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<SharedFlowBundle revision="1" name="common_threatprotection">
+    <ConfigurationVersion majorVersion="4" minorVersion="0"/>
+    <CreatedAt>1498094160797</CreatedAt>
+    <CreatedBy>trial@apigee.com</CreatedBy>
+    <Description>Common ThreatProtection Policies</Description>
+    <DisplayName>common_threatprotection</DisplayName>
+    <LastModifiedAt>1498094160797</LastModifiedAt>
+    <LastModifiedBy>trial@apigee.com</LastModifiedBy>
+    <Policies>
+        <Policy>cp_JS.JavaScriptInjectionEvaluation</Policy>
+        <Policy>cp_JS.SQLInjectionEvaluation</Policy>
+        <Policy>cp_JS.ServerSideIncludeInjectionEvaluation</Policy>
+        <Policy>cp_JS.XPathSyntaxInjectionEvaluation</Policy>
+        <Policy>cp_JSONThreatProtection.DoSAEvaluation</Policy>
+        <Policy>cp_RaiseFault.RedirectToDefaultFaultHandling</Policy>
+        <Policy>cp_XMLThreatProtection.DoSAEvaluation</Policy>
+    </Policies>
+    <Resources>
+        <Resource>jsc://cp_javaScriptInjectionEvaluation.js</Resource>
+        <Resource>jsc://cp_serverSideIncludeInjectionEvaluation.js</Resource>
+        <Resource>jsc://cp_sqlInjectionEvaluation.js</Resource>
+        <Resource>jsc://cp_xPathSyntaxInjectionEvaluation.js</Resource>
+    </Resources>
+    <Spec></Spec>
+    <subType>SharedFlow</subType>
+    <SharedFlows>
+        <SharedFlow>default</SharedFlow>
+    </SharedFlows>
+</SharedFlowBundle>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<AssignMessage async="false" continueOnError="false" enabled="true" name="cp_AssignMessageInitializeFaultVariables">
+    <DisplayName>cp_AssignMessage.InitializeFaultVariables</DisplayName>
+    <AssignVariable>
+        <Name>cp.fault.statusCode</Name>
+        <Ref>cp.fault.statusCode</Ref>
+        <Value>NA</Value>
+    </AssignVariable>
+    <AssignVariable>
+        <Name>cp.fault.reasonPhrase</Name>
+        <Ref>cp.fault.reasonPhrase</Ref>
+        <Value>NA</Value>
+    </AssignVariable>
+    <AssignVariable>
+        <Name>cp.fault.messageText</Name>
+        <Ref>cp.fault.messageText</Ref>
+        <Value>NA</Value>
+    </AssignVariable>
+    <AssignVariable>
+        <Name>cp.fault.messageId</Name>
+        <Ref>cp.fault.messageId</Ref>
+        <Value>NA</Value>
+    </AssignVariable>
+    <AssignVariable>
+        <Name>cp.fault.exceptionType</Name>
+        <Ref>cp.fault.exceptionType</Ref>
+        <Value>NA</Value>
+    </AssignVariable>
+    <AssignVariable>
+        <Name>cp.fault.messageVariables</Name>
+        <Ref>cp.fault.messageVariables</Ref>
+        <Value>NA</Value>
+    </AssignVariable>
+    <AssignTo createNew="false" transport="http" type="request"/>
+</AssignMessage>
