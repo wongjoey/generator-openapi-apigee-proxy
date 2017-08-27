@@ -7,6 +7,9 @@ const path = require('path');
 const xmlutils = require('./xmlutils.js');
 
 const sharedFlowBase = '/sharedflows';
+const sharedFlowFlows = '/flows';
+const sharedFlowPolicies = '/policies';
+
 const basePath = '/apiproxy';
 const proxyBase = path.join(basePath, '/proxies');
 const targetBase = path.join(basePath, '/targets');
@@ -22,15 +25,14 @@ const policyBase = path.join(basePath, '/policies');
  * This module is specifically designed to support the auto-creation of proxy code that implements Apigee best
  * practices in the following areas:
  *
- * -- Error handling
+ * -- Error handling (started; needs review, plus conditional include/exclude flags)
  * -- Generic flow after all other flows to catch requests that fall through
  * -- Authentication and authorization
- * -- Traffic management (particularly setting of SpikeArrest value)
- * -- Threat detection and mitigation
+ * -- Traffic management (particularly setting of SpikeArrest value)  (started; needs review, plus conditional include/exclude flags)
+ * -- Threat detection and mitigation  (started; needs review, plus conditional include/exclude flags)
  * -- External configurability of proxy behavior (via properties in API Product, Developer and App definitions, or
  *    via encrypted KVM)
  * -- JWT handling
- * -- Default flow handling (when no conditional flows match)
  * -- Shared Flows usage
  * -- Target Server usage
  *
@@ -38,7 +40,7 @@ const policyBase = path.join(basePath, '/policies');
  *
  * -- BaaS access
  * -- Custom analytics
- * -- Caching
+ * -- Caching (probably based on vendor extensions in Swagger)
  * -- Mock target generation
  *
  * Also:
@@ -47,7 +49,7 @@ const policyBase = path.join(basePath, '/policies');
  * -- Test case generation
  */
 
-var updateProxyDescriptor = function (templateSourceFile, destPath, swaggerInfo, cb) {
+var updateProxyDescriptor = function (templatePath, templateSourceFile, destPath, fileName, swaggerInfo, cb) {
   var xml = fse.readFileSync(templateSourceFile).toString();
 
   xmlutils.parseXML(xml, function (err, result) {
@@ -74,19 +76,37 @@ var updateProxyDescriptor = function (templateSourceFile, destPath, swaggerInfo,
 
     var xmlDoc = xmlutils.parsedXmlToXmlBuilder(result);
     var xmlString = xmlDoc.end({ pretty: true });
-    fse.writeFileSync(destPath, xmlString);
+    fse.writeFileSync(path.join(destPath, fileName), xmlString);
 
     cb(null, xmlString);
   });
 }
 
-var createOrUpdateProxyEndpoints = function (templateSourceFile, destPath, swaggerInfo, cb) {
+var createOrUpdateProxyEndpoints = function (templatePath, templateSourceFile, destPath, swaggerInfo, cb) {
   var xml = fse.readFileSync(templateSourceFile).toString();
 
   xmlutils.parseXML(xml, function (err, result) {
     if (err) {
       cb(err, null);
     }
+
+    // Add shared flow stuff
+    copyFromFileSystem(
+      path.join(templatePath, sharedFlowBase, sharedFlowPolicies, '/'),
+      path.join(destPath, policyBase)
+    );
+    var proxyEndpointElement = xmlutils.getElementByPath(result, '$.ProxyEndpoint');
+    var faultRulesElement = xmlutils.createOrUpdateElement(proxyEndpointElement, 'FaultRules', [], true);
+    var faultRuleElement = xmlutils.createOrUpdateElement(faultRulesElement, 'FaultRule', [], true);
+    xmlutils.createOrUpdateElementAttribute(faultRuleElement, 'name', 'Generic fault handling', true);
+    var faultRuleStepElement = xmlutils.createOrUpdateElement(faultRuleElement, 'Step', [], true);
+    var faultRuleStepNameElement = xmlutils.createOrUpdateElement(faultRuleStepElement, 'Name',
+      'FlowCallout.common_faulthandling', true);
+    var faultRuleElement = xmlutils.createOrUpdateElement(proxyEndpointElement, 'DefaultFaultRule', [], true, true);
+    xmlutils.createOrUpdateElementAttribute(faultRuleElement, 'name', 'Default fault handling', true);
+    faultRuleStepElement = xmlutils.createOrUpdateElement(faultRuleElement, 'Step', [], true);
+    faultRuleStepNameElement = xmlutils.createOrUpdateElement(faultRuleStepElement, 'Name',
+      'Default-message', true);
 
     // Update flows based on what's in the OpenAPI spec
     var flowsElement = xmlutils.getElementByPath(result, '$.ProxyEndpoint.Flows');
@@ -114,13 +134,13 @@ var createOrUpdateProxyEndpoints = function (templateSourceFile, destPath, swagg
 
     var xmlDoc = xmlutils.parsedXmlToXmlBuilder(result);
     var xmlString = xmlDoc.end({ pretty: true });
-    fse.writeFileSync(destPath, xmlString);
+    fse.writeFileSync(path.join(destPath, proxyBase, 'default.xml'), xmlString);
 
     cb(null, xmlString);
   });
 }
 
-var createOrUpdateTargetEndpoints = function (templateSourceFile, destPath, swaggerInfo, cb) {
+var createOrUpdateTargetEndpoints = function (templatePath, templateSourceFile, destPath, swaggerInfo, cb) {
   var xml = fse.readFileSync(templateSourceFile).toString();
 
   xmlutils.parseXML(xml, function (err, result) {
@@ -130,7 +150,7 @@ var createOrUpdateTargetEndpoints = function (templateSourceFile, destPath, swag
 
     var xmlDoc = xmlutils.parsedXmlToXmlBuilder(result);
     var xmlString = xmlDoc.end({ pretty: true });
-    fse.writeFileSync(destPath, xmlString);
+    fse.writeFileSync(path.join(destPath, targetBase, 'default.xml'), xmlString);
 
     cb(null, xmlString);
   });
@@ -145,7 +165,7 @@ var copyFromFileSystem = function (sourcePath, destPath) {
 }
 
 module.exports = {
-  generateProxy: function(sourcePath, destPath, swaggerInfo, props, returnCallback) {
+  generateProxy: function(templatePath, sourcePath, destPath, swaggerInfo, props, returnCallback) {
 
     async.series([
       function(cb) {
@@ -177,8 +197,8 @@ module.exports = {
         // If a "sharedflows" directory exists in the template directory, then copy those shared flows too
         // TODO Consider if we need to add logic to only copy *referenced* shared flows and resources instead of everything in the template.
         copyFromFileSystem(
-          path.join(sourcePath, sharedFlowBase, '/'),
-          path.join(destPath + sharedFlowBase)
+          path.join(templatePath, sharedFlowBase, sharedFlowFlows, '/'),
+          path.join(destPath, sharedFlowBase)
         );
 
         cb(null);
@@ -192,8 +212,10 @@ module.exports = {
 
         // create the proxy descriptor from the template
         updateProxyDescriptor(
+          templatePath,
           path.join(sourcePath, basePath, 'PublicAPI.xml'),
-          path.join(createdPath, 'PublicAPI.xml'),
+          destPath,
+          path.join(basePath, 'PublicAPI.xml'),
           swaggerInfo,
           cb
         );
@@ -207,8 +229,9 @@ module.exports = {
 
         // create the proxy endpoint(s) from the template
         createOrUpdateProxyEndpoints(
+          templatePath,
           path.join(sourcePath, proxyBase, 'default.xml'),
-          path.join(createdPath, 'default.xml'),
+          destPath,
           swaggerInfo,
           cb
         );
@@ -222,8 +245,9 @@ module.exports = {
 
         // create the target(s) from the template
         createOrUpdateTargetEndpoints(
+          templatePath,
           path.join(sourcePath, targetBase, 'default.xml'),
-          path.join(destPath, targetBase, 'default.xml'),
+          destPath,
           swaggerInfo,
           cb
         );

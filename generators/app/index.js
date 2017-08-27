@@ -315,13 +315,14 @@ module.exports = class extends Generator {
     return swaggerutils.parse(self.props.specPath)
       .then((swaggerInfo) => {
         // generate the proxy
-        proxyutils.generateProxy(self.props.sourcePath, self.props.destPath, swaggerInfo, self.props, function(err, results) {
-          if (err) {
-            throw err;
-          }
-          // 'results' is the path to the proxy
-          // TODO zip the proxy and place in output directory.
-        });
+        proxyutils.generateProxy(self.templatePath(), self.props.sourcePath, self.props.destPath, swaggerInfo,
+          self.props, function(err, results) {
+            if (err) {
+              throw err;
+            }
+            // 'results' is the path to the proxy
+            // TODO zip the proxy and place in output directory.
+          });
       });
   }
 

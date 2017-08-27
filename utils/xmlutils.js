@@ -90,6 +90,10 @@ module.exports = {
       }
       currentNode = root[rootName];
       startIndex += 2;
+      if (startIndex >= splitPath.length) {
+        // asked for root element.
+        return currentNode;
+      }
     } else {
       currentNode = root;
     }
@@ -149,6 +153,8 @@ module.exports = {
         parent[elemName] = newContent;
       }
     }
+
+    return newContent;
   },
 
   removeChild: function(parent, childName, child) {

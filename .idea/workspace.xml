@@ -2,16 +2,60 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f4ac906d-de5e-42ac-b1a5-871e956ff296" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/generators/app/templates/proxy/default/apiproxy/policies/CheckQuota.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/generators/app/templates/proxy/default/apiproxy/policies/StripAPIKey.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/generators/app/templates/proxy/default/apiproxy/policies/ValidateAPIKey.xml" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/generators/app/templates/proxy/default/apiproxy/policies/FlowCallout.common_faulthandling.xml" afterPath="$PROJECT_DIR$/generators/app/templates/sharedflows/policies/FlowCallout.common_faulthandling.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/generators/app/templates/proxy/default/apiproxy/policies/FlowCallout.common_preflow_apikey.xml" afterPath="$PROJECT_DIR$/generators/app/templates/sharedflows/policies/FlowCallout.common_preflow_apikey.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/generators/app/templates/proxy/default/apiproxy/policies/FlowCallout.common_threatprotection.xml" afterPath="$PROJECT_DIR$/generators/app/templates/sharedflows/policies/FlowCallout.common_threatprotection.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/generators/app/templates/proxy/default/sharedflows/comm_preflow_apikey/sharedflowbundle/Icon&#13;" afterPath="$PROJECT_DIR$/generators/app/templates/sharedflows/flows/comm_preflow_apikey/sharedflowbundle/Icon&#13;" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/generators/app/templates/proxy/default/sharedflows/comm_preflow_apikey/sharedflowbundle/common_preflow_apikey.xml" afterPath="$PROJECT_DIR$/generators/app/templates/sharedflows/flows/comm_preflow_apikey/sharedflowbundle/common_preflow_apikey.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/generators/app/templates/proxy/default/sharedflows/comm_preflow_apikey/sharedflowbundle/policies/Icon&#13;" afterPath="$PROJECT_DIR$/generators/app/templates/sharedflows/flows/comm_preflow_apikey/sharedflowbundle/policies/Icon&#13;" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/generators/app/templates/proxy/default/sharedflows/comm_preflow_apikey/sharedflowbundle/policies/cp_remove_apikey.xml" afterPath="$PROJECT_DIR$/generators/app/templates/sharedflows/flows/comm_preflow_apikey/sharedflowbundle/policies/cp_remove_apikey.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/generators/app/templates/proxy/default/sharedflows/comm_preflow_apikey/sharedflowbundle/policies/cp_setlogmessage.xml" afterPath="$PROJECT_DIR$/generators/app/templates/sharedflows/flows/comm_preflow_apikey/sharedflowbundle/policies/cp_setlogmessage.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/generators/app/templates/proxy/default/sharedflows/comm_preflow_apikey/sharedflowbundle/policies/cp_spikearrest.xml" afterPath="$PROJECT_DIR$/generators/app/templates/sharedflows/flows/comm_preflow_apikey/sharedflowbundle/policies/cp_spikearrest.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/generators/app/templates/proxy/default/sharedflows/comm_preflow_apikey/sharedflowbundle/policies/cp_verifyapikey.xml" afterPath="$PROJECT_DIR$/generators/app/templates/sharedflows/flows/comm_preflow_apikey/sharedflowbundle/policies/cp_verifyapikey.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/generators/app/templates/proxy/default/sharedflows/comm_preflow_apikey/sharedflowbundle/resources/Icon&#13;" afterPath="$PROJECT_DIR$/generators/app/templates/sharedflows/flows/comm_preflow_apikey/sharedflowbundle/resources/Icon&#13;" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/generators/app/templates/proxy/default/sharedflows/comm_preflow_apikey/sharedflowbundle/resources/jsc/Icon&#13;" afterPath="$PROJECT_DIR$/generators/app/templates/sharedflows/flows/comm_preflow_apikey/sharedflowbundle/resources/jsc/Icon&#13;" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/generators/app/templates/proxy/default/sharedflows/comm_preflow_apikey/sharedflowbundle/resources/jsc/cp_setlogmessage.js" afterPath="$PROJECT_DIR$/generators/app/templates/sharedflows/flows/comm_preflow_apikey/sharedflowbundle/resources/jsc/cp_setlogmessage.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/generators/app/templates/proxy/default/sharedflows/comm_preflow_apikey/sharedflowbundle/sharedflows/Icon&#13;" afterPath="$PROJECT_DIR$/generators/app/templates/sharedflows/flows/comm_preflow_apikey/sharedflowbundle/sharedflows/Icon&#13;" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/generators/app/templates/proxy/default/sharedflows/comm_preflow_apikey/sharedflowbundle/sharedflows/default.xml" afterPath="$PROJECT_DIR$/generators/app/templates/sharedflows/flows/comm_preflow_apikey/sharedflowbundle/sharedflows/default.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/generators/app/templates/proxy/default/sharedflows/common_faulthandling/sharedflowbundle/Icon&#13;" afterPath="$PROJECT_DIR$/generators/app/templates/sharedflows/flows/common_faulthandling/sharedflowbundle/Icon&#13;" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/generators/app/templates/proxy/default/sharedflows/common_faulthandling/sharedflowbundle/common_faulthandling.xml" afterPath="$PROJECT_DIR$/generators/app/templates/sharedflows/flows/common_faulthandling/sharedflowbundle/common_faulthandling.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/generators/app/templates/proxy/default/sharedflows/common_faulthandling/sharedflowbundle/policies/Icon&#13;" afterPath="$PROJECT_DIR$/generators/app/templates/sharedflows/flows/common_faulthandling/sharedflowbundle/policies/Icon&#13;" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/generators/app/templates/proxy/default/sharedflows/common_faulthandling/sharedflowbundle/policies/cp_AssignMessage.Fault.SetJSONTemplateMessage.xml" afterPath="$PROJECT_DIR$/generators/app/templates/sharedflows/flows/common_faulthandling/sharedflowbundle/policies/cp_AssignMessage.Fault.SetJSONTemplateMessage.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/generators/app/templates/proxy/default/sharedflows/common_faulthandling/sharedflowbundle/policies/cp_AssignMessage.Fault.SetXMLTemplateMessage.xml" afterPath="$PROJECT_DIR$/generators/app/templates/sharedflows/flows/common_faulthandling/sharedflowbundle/policies/cp_AssignMessage.Fault.SetXMLTemplateMessage.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/generators/app/templates/proxy/default/sharedflows/common_faulthandling/sharedflowbundle/policies/cp_AssignMessageInitializeFaultVariables.xml" afterPath="$PROJECT_DIR$/generators/app/templates/sharedflows/flows/common_faulthandling/sharedflowbundle/policies/cp_AssignMessageInitializeFaultVariables.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/generators/app/templates/proxy/default/sharedflows/common_faulthandling/sharedflowbundle/policies/cp_JSGenericFaultHandling.xml" afterPath="$PROJECT_DIR$/generators/app/templates/sharedflows/flows/common_faulthandling/sharedflowbundle/policies/cp_JSGenericFaultHandling.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/generators/app/templates/proxy/default/sharedflows/common_faulthandling/sharedflowbundle/policies/cp_MessageLoggingLogger.xml" afterPath="$PROJECT_DIR$/generators/app/templates/sharedflows/flows/common_faulthandling/sharedflowbundle/policies/cp_MessageLoggingLogger.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/generators/app/templates/proxy/default/sharedflows/common_faulthandling/sharedflowbundle/policies/cp_setlogmessage.xml" afterPath="$PROJECT_DIR$/generators/app/templates/sharedflows/flows/common_faulthandling/sharedflowbundle/policies/cp_setlogmessage.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/generators/app/templates/proxy/default/sharedflows/common_faulthandling/sharedflowbundle/resources/Icon&#13;" afterPath="$PROJECT_DIR$/generators/app/templates/sharedflows/flows/common_faulthandling/sharedflowbundle/resources/Icon&#13;" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/generators/app/templates/proxy/default/sharedflows/common_faulthandling/sharedflowbundle/resources/jsc/Icon&#13;" afterPath="$PROJECT_DIR$/generators/app/templates/sharedflows/flows/common_faulthandling/sharedflowbundle/resources/jsc/Icon&#13;" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/generators/app/templates/proxy/default/sharedflows/common_faulthandling/sharedflowbundle/resources/jsc/cp_JS.GenericFaultHandling.js" afterPath="$PROJECT_DIR$/generators/app/templates/sharedflows/flows/common_faulthandling/sharedflowbundle/resources/jsc/cp_JS.GenericFaultHandling.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/generators/app/templates/proxy/default/sharedflows/common_faulthandling/sharedflowbundle/resources/jsc/cp_setlogmessage.js" afterPath="$PROJECT_DIR$/generators/app/templates/sharedflows/flows/common_faulthandling/sharedflowbundle/resources/jsc/cp_setlogmessage.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/generators/app/templates/proxy/default/sharedflows/common_faulthandling/sharedflowbundle/sharedflows/Icon&#13;" afterPath="$PROJECT_DIR$/generators/app/templates/sharedflows/flows/common_faulthandling/sharedflowbundle/sharedflows/Icon&#13;" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/generators/app/templates/proxy/default/sharedflows/common_faulthandling/sharedflowbundle/sharedflows/default.xml" afterPath="$PROJECT_DIR$/generators/app/templates/sharedflows/flows/common_faulthandling/sharedflowbundle/sharedflows/default.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/generators/app/templates/proxy/default/sharedflows/common_threatprotection/sharedflowbundle/Icon&#13;" afterPath="$PROJECT_DIR$/generators/app/templates/sharedflows/flows/common_threatprotection/sharedflowbundle/Icon&#13;" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/generators/app/templates/proxy/default/sharedflows/common_threatprotection/sharedflowbundle/common_threatprotection.xml" afterPath="$PROJECT_DIR$/generators/app/templates/sharedflows/flows/common_threatprotection/sharedflowbundle/common_threatprotection.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/generators/app/templates/proxy/default/sharedflows/common_threatprotection/sharedflowbundle/policies/Icon&#13;" afterPath="$PROJECT_DIR$/generators/app/templates/sharedflows/flows/common_threatprotection/sharedflowbundle/policies/Icon&#13;" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/generators/app/templates/proxy/default/sharedflows/common_threatprotection/sharedflowbundle/policies/cp_JS.JavaScriptInjectionEvaluation.xml" afterPath="$PROJECT_DIR$/generators/app/templates/sharedflows/flows/common_threatprotection/sharedflowbundle/policies/cp_JS.JavaScriptInjectionEvaluation.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/generators/app/templates/proxy/default/sharedflows/common_threatprotection/sharedflowbundle/policies/cp_JS.SQLInjectionEvaluation.xml" afterPath="$PROJECT_DIR$/generators/app/templates/sharedflows/flows/common_threatprotection/sharedflowbundle/policies/cp_JS.SQLInjectionEvaluation.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/generators/app/templates/proxy/default/sharedflows/common_threatprotection/sharedflowbundle/policies/cp_JS.ServerSideIncludeInjectionEvaluation.xml" afterPath="$PROJECT_DIR$/generators/app/templates/sharedflows/flows/common_threatprotection/sharedflowbundle/policies/cp_JS.ServerSideIncludeInjectionEvaluation.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/generators/app/templates/proxy/default/sharedflows/common_threatprotection/sharedflowbundle/policies/cp_JS.XPathSyntaxInjectionEvaluation.xml" afterPath="$PROJECT_DIR$/generators/app/templates/sharedflows/flows/common_threatprotection/sharedflowbundle/policies/cp_JS.XPathSyntaxInjectionEvaluation.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/generators/app/templates/proxy/default/sharedflows/common_threatprotection/sharedflowbundle/policies/cp_JSONThreatProtection.DoSAEvaluation.xml" afterPath="$PROJECT_DIR$/generators/app/templates/sharedflows/flows/common_threatprotection/sharedflowbundle/policies/cp_JSONThreatProtection.DoSAEvaluation.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/generators/app/templates/proxy/default/sharedflows/common_threatprotection/sharedflowbundle/policies/cp_RaiseFault.RedirectToDefaultFaultHandling.xml" afterPath="$PROJECT_DIR$/generators/app/templates/sharedflows/flows/common_threatprotection/sharedflowbundle/policies/cp_RaiseFault.RedirectToDefaultFaultHandling.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/generators/app/templates/proxy/default/sharedflows/common_threatprotection/sharedflowbundle/policies/cp_XMLThreatProtection.DoSAEvaluation.xml" afterPath="$PROJECT_DIR$/generators/app/templates/sharedflows/flows/common_threatprotection/sharedflowbundle/policies/cp_XMLThreatProtection.DoSAEvaluation.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/generators/app/templates/proxy/default/sharedflows/common_threatprotection/sharedflowbundle/resources/Icon&#13;" afterPath="$PROJECT_DIR$/generators/app/templates/sharedflows/flows/common_threatprotection/sharedflowbundle/resources/Icon&#13;" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/generators/app/templates/proxy/default/sharedflows/common_threatprotection/sharedflowbundle/resources/jsc/Icon&#13;" afterPath="$PROJECT_DIR$/generators/app/templates/sharedflows/flows/common_threatprotection/sharedflowbundle/resources/jsc/Icon&#13;" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/generators/app/templates/proxy/default/sharedflows/common_threatprotection/sharedflowbundle/resources/jsc/cp_javaScriptInjectionEvaluation.js" afterPath="$PROJECT_DIR$/generators/app/templates/sharedflows/flows/common_threatprotection/sharedflowbundle/resources/jsc/cp_javaScriptInjectionEvaluation.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/generators/app/templates/proxy/default/sharedflows/common_threatprotection/sharedflowbundle/resources/jsc/cp_serverSideIncludeInjectionEvaluation.js" afterPath="$PROJECT_DIR$/generators/app/templates/sharedflows/flows/common_threatprotection/sharedflowbundle/resources/jsc/cp_serverSideIncludeInjectionEvaluation.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/generators/app/templates/proxy/default/sharedflows/common_threatprotection/sharedflowbundle/resources/jsc/cp_sqlInjectionEvaluation.js" afterPath="$PROJECT_DIR$/generators/app/templates/sharedflows/flows/common_threatprotection/sharedflowbundle/resources/jsc/cp_sqlInjectionEvaluation.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/generators/app/templates/proxy/default/sharedflows/common_threatprotection/sharedflowbundle/resources/jsc/cp_xPathSyntaxInjectionEvaluation.js" afterPath="$PROJECT_DIR$/generators/app/templates/sharedflows/flows/common_threatprotection/sharedflowbundle/resources/jsc/cp_xPathSyntaxInjectionEvaluation.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/generators/app/templates/proxy/default/sharedflows/common_threatprotection/sharedflowbundle/sharedflows/Icon&#13;" afterPath="$PROJECT_DIR$/generators/app/templates/sharedflows/flows/common_threatprotection/sharedflowbundle/sharedflows/Icon&#13;" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/generators/app/templates/proxy/default/sharedflows/common_threatprotection/sharedflowbundle/sharedflows/default.xml" afterPath="$PROJECT_DIR$/generators/app/templates/sharedflows/flows/common_threatprotection/sharedflowbundle/sharedflows/default.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/generators/app/index.js" afterPath="$PROJECT_DIR$/generators/app/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/generators/app/templates/proxy/default/apiproxy/PublicAPI.xml" afterPath="$PROJECT_DIR$/generators/app/templates/proxy/default/apiproxy/PublicAPI.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/generators/app/templates/proxy/default/apiproxy/proxies/default.xml" afterPath="$PROJECT_DIR$/generators/app/templates/proxy/default/apiproxy/proxies/default.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/generators/app/templates/proxy/default/apiproxy/targets/default.xml" afterPath="$PROJECT_DIR$/generators/app/templates/proxy/default/apiproxy/targets/default.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/utils/proxyutils.js" afterPath="$PROJECT_DIR$/utils/proxyutils.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/utils/swaggerutils.js" afterPath="$PROJECT_DIR$/utils/swaggerutils.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/utils/xmlutils.js" afterPath="$PROJECT_DIR$/utils/xmlutils.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -28,28 +72,28 @@
       <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/generators/app/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="318" column="9" lean-forward="false" selection-start-line="318" selection-start-column="9" selection-end-line="318" selection-end-column="9" />
+            <state relative-caret-position="176">
+              <caret line="317" column="7" lean-forward="false" selection-start-line="317" selection-start-column="7" selection-end-line="317" selection-end-column="7" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="default.xml" pinned="false" current-in-tab="false">
+      <file leaf-file-name="default.xml" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/generators/app/templates/proxy/default/apiproxy/proxies/default.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="435">
-              <caret line="29" column="22" lean-forward="false" selection-start-line="29" selection-start-column="3" selection-end-line="29" selection-end-column="22" />
+            <state relative-caret-position="15">
+              <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="proxyutils.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="proxyutils.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/utils/proxyutils.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="114" column="25" lean-forward="false" selection-start-line="114" selection-start-column="25" selection-end-line="114" selection-end-column="25" />
+            <state relative-caret-position="460">
+              <caret line="111" column="31" lean-forward="false" selection-start-line="111" selection-start-column="31" selection-end-line="111" selection-end-column="31" />
               <folding />
             </state>
           </provider>
@@ -58,8 +102,8 @@
       <file leaf-file-name="xmlutils.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/utils/xmlutils.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="123" column="0" lean-forward="true" selection-start-line="123" selection-start-column="0" selection-end-line="123" selection-end-column="0" />
+            <state relative-caret-position="180">
+              <caret line="123" column="1" lean-forward="false" selection-start-line="123" selection-start-column="1" selection-end-line="123" selection-end-column="1" />
               <folding />
             </state>
           </provider>
@@ -68,7 +112,7 @@
       <file leaf-file-name="async.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/node_modules/async/dist/async.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
+            <state relative-caret-position="13530">
               <caret line="902" column="31" lean-forward="false" selection-start-line="902" selection-start-column="31" selection-end-line="902" selection-end-column="31" />
               <folding />
             </state>
@@ -88,7 +132,7 @@
       <file leaf-file-name="swaggerutils.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/utils/swaggerutils.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1">
+            <state relative-caret-position="555">
               <caret line="37" column="88" lean-forward="false" selection-start-line="37" selection-start-column="88" selection-end-line="37" selection-end-column="88" />
               <folding />
             </state>
@@ -113,6 +157,8 @@
       <find>spec-</find>
       <find>this</find>
       <find>%</find>
+      <find>destPa</find>
+      <find>destPath</find>
     </findStrings>
     <replaceStrings>
       <replace>desc</replace>
@@ -128,14 +174,15 @@
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/utils/validators.js" />
-        <option value="$PROJECT_DIR$/generators/app/index.js" />
         <option value="$PROJECT_DIR$/generators/app/templates/proxy/default/apiproxy/PublicAPI.xml" />
         <option value="$PROJECT_DIR$/generators/app/templates/proxy/default/apiproxy/targets/default.xml" />
-        <option value="$PROJECT_DIR$/generators/app/templates/proxy/default/apiproxy/proxies/default.xml" />
         <option value="$PROJECT_DIR$/generators/app/templates/proxy/default/apiproxy/policies/FlowCallout.common_preflow_accesstoken.xml" />
         <option value="$PROJECT_DIR$/utils/swaggerutils.js" />
+        <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/generators/app/index.js" />
         <option value="$PROJECT_DIR$/utils/proxyutils.js" />
         <option value="$PROJECT_DIR$/utils/xmlutils.js" />
+        <option value="$PROJECT_DIR$/generators/app/templates/proxy/default/apiproxy/proxies/default.xml" />
       </list>
     </option>
   </component>
@@ -220,69 +267,16 @@
               <item name="generators" type="462c0819:PsiDirectoryNode" />
               <item name="app" type="462c0819:PsiDirectoryNode" />
               <item name="templates" type="462c0819:PsiDirectoryNode" />
-              <item name="proxy" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="generator-openapi-apigee-proxy" type="b2602c69:ProjectViewProjectNode" />
-              <item name="generator-openapi-apigee-proxy" type="462c0819:PsiDirectoryNode" />
-              <item name="generators" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-              <item name="proxy" type="462c0819:PsiDirectoryNode" />
-              <item name="default" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="generator-openapi-apigee-proxy" type="b2602c69:ProjectViewProjectNode" />
-              <item name="generator-openapi-apigee-proxy" type="462c0819:PsiDirectoryNode" />
-              <item name="generators" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-              <item name="proxy" type="462c0819:PsiDirectoryNode" />
-              <item name="default" type="462c0819:PsiDirectoryNode" />
-              <item name="apiproxy" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="generator-openapi-apigee-proxy" type="b2602c69:ProjectViewProjectNode" />
-              <item name="generator-openapi-apigee-proxy" type="462c0819:PsiDirectoryNode" />
-              <item name="generators" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-              <item name="proxy" type="462c0819:PsiDirectoryNode" />
-              <item name="default" type="462c0819:PsiDirectoryNode" />
-              <item name="apiproxy" type="462c0819:PsiDirectoryNode" />
-              <item name="policies" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="generator-openapi-apigee-proxy" type="b2602c69:ProjectViewProjectNode" />
-              <item name="generator-openapi-apigee-proxy" type="462c0819:PsiDirectoryNode" />
-              <item name="generators" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-              <item name="proxy" type="462c0819:PsiDirectoryNode" />
-              <item name="default" type="462c0819:PsiDirectoryNode" />
-              <item name="apiproxy" type="462c0819:PsiDirectoryNode" />
-              <item name="proxies" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="generator-openapi-apigee-proxy" type="b2602c69:ProjectViewProjectNode" />
-              <item name="generator-openapi-apigee-proxy" type="462c0819:PsiDirectoryNode" />
-              <item name="generators" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-              <item name="proxy" type="462c0819:PsiDirectoryNode" />
-              <item name="default" type="462c0819:PsiDirectoryNode" />
-              <item name="apiproxy" type="462c0819:PsiDirectoryNode" />
-              <item name="targets" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="generator-openapi-apigee-proxy" type="b2602c69:ProjectViewProjectNode" />
-              <item name="generator-openapi-apigee-proxy" type="462c0819:PsiDirectoryNode" />
-              <item name="generators" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-              <item name="proxy" type="462c0819:PsiDirectoryNode" />
-              <item name="default" type="462c0819:PsiDirectoryNode" />
               <item name="sharedflows" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="generator-openapi-apigee-proxy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="generator-openapi-apigee-proxy" type="462c0819:PsiDirectoryNode" />
+              <item name="generators" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+              <item name="sharedflows" type="462c0819:PsiDirectoryNode" />
+              <item name="policies" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="generator-openapi-apigee-proxy" type="b2602c69:ProjectViewProjectNode" />
@@ -309,6 +303,8 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/generators/app/templates/sharedflows/policies" />
+      <recent name="$PROJECT_DIR$/generators/app/templates/sharedflows/flows" />
       <recent name="$PROJECT_DIR$/generators/app/templates" />
     </key>
   </component>
@@ -388,26 +384,28 @@
       <workItem from="1503351925353" duration="32937000" />
       <workItem from="1503444836596" duration="40759000" />
       <workItem from="1503594090244" duration="7388000" />
-      <workItem from="1503607840432" duration="12243000" />
+      <workItem from="1503607840432" duration="12354000" />
+      <workItem from="1503838941609" duration="4311000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="93327000" />
+    <option name="totallyTimeSpent" value="97749000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="-1080" width="1920" height="1080" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2527646" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.50208336" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33716077" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33716077" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.4160874" sideWeight="0.49791667" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.4160874" sideWeight="0.49791667" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -427,51 +425,100 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/utils/proxyutils.js</url>
-          <line>114</line>
-          <option name="timeStamp" value="133" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/utils/xmlutils.js</url>
-          <line>184</line>
+          <line>190</line>
           <option name="timeStamp" value="159" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/utils/proxyutils.js</url>
-          <line>156</line>
-          <properties />
-          <option name="timeStamp" value="162" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/utils/xmlutils.js</url>
           <line>47</line>
-          <properties />
           <option name="timeStamp" value="165" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/generators/app/index.js</url>
-          <line>319</line>
-          <properties />
-          <option name="timeStamp" value="166" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/utils/proxyutils.js</url>
-          <line>112</line>
-          <properties />
-          <option name="timeStamp" value="175" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/utils/xmlutils.js</url>
           <line>56</line>
-          <properties />
           <option name="timeStamp" value="180" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/utils/proxyutils.js</url>
+          <line>97</line>
+          <properties />
+          <option name="timeStamp" value="182" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/utils/proxyutils.js</url>
+          <line>176</line>
+          <properties />
+          <option name="timeStamp" value="185" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/utils/proxyutils.js</url>
+          <line>111</line>
+          <properties />
+          <option name="timeStamp" value="192" />
+        </line-breakpoint>
       </breakpoints>
-      <option name="time" value="181" />
+      <option name="time" value="193" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/generators/app/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4770">
+          <caret line="318" column="9" lean-forward="false" selection-start-line="318" selection-start-column="9" selection-end-line="318" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/generators/app/templates/proxy/default/apiproxy/proxies/default.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="435">
+          <caret line="29" column="22" lean-forward="false" selection-start-line="29" selection-start-column="3" selection-end-line="29" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/async/dist/async.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="13530">
+          <caret line="902" column="31" lean-forward="false" selection-start-line="902" selection-start-column="31" selection-end-line="902" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/xmlutils.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1845">
+          <caret line="123" column="0" lean-forward="true" selection-start-line="123" selection-start-column="0" selection-end-line="123" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="525">
+          <caret line="35" column="22" lean-forward="false" selection-start-line="35" selection-start-column="22" selection-end-line="35" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/swaggerutils.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="555">
+          <caret line="37" column="88" lean-forward="false" selection-start-line="37" selection-start-column="88" selection-end-line="37" selection-end-column="88" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/proxyutils.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1710">
+          <caret line="114" column="25" lean-forward="false" selection-start-line="114" selection-start-column="25" selection-end-line="114" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/generators/app/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1950">
@@ -685,7 +732,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/node_modules/async/dist/async.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
+        <state relative-caret-position="13530">
           <caret line="902" column="31" lean-forward="false" selection-start-line="902" selection-start-column="31" selection-end-line="902" selection-end-column="31" />
           <folding />
         </state>
@@ -699,7 +746,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/generators/app/templates/proxy/default/apiproxy/policies/FlowCallout.common_preflow_apikey.xml">
+    <entry file="file://$PROJECT_DIR$/generators/app/templates/sharedflows/policies/FlowCallout.common_preflow_apikey.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
           <caret line="5" column="43" lean-forward="false" selection-start-line="5" selection-start-column="43" selection-end-line="5" selection-end-column="43" />
@@ -715,42 +762,50 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/generators/app/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="318" column="9" lean-forward="false" selection-start-line="318" selection-start-column="9" selection-end-line="318" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/generators/app/templates/proxy/default/apiproxy/proxies/default.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="29" column="22" lean-forward="false" selection-start-line="29" selection-start-column="3" selection-end-line="29" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/utils/swaggerutils.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1">
+        <state relative-caret-position="555">
           <caret line="37" column="88" lean-forward="false" selection-start-line="37" selection-start-column="88" selection-end-line="37" selection-end-column="88" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="27" column="19" lean-forward="false" selection-start-line="27" selection-start-column="19" selection-end-line="27" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/generators/app/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="317" column="7" lean-forward="false" selection-start-line="317" selection-start-column="7" selection-end-line="317" selection-end-column="7" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/utils/xmlutils.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="123" column="0" lean-forward="true" selection-start-line="123" selection-start-column="0" selection-end-line="123" selection-end-column="0" />
+        <state relative-caret-position="180">
+          <caret line="123" column="1" lean-forward="false" selection-start-line="123" selection-start-column="1" selection-end-line="123" selection-end-column="1" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/utils/proxyutils.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="114" column="25" lean-forward="false" selection-start-line="114" selection-start-column="25" selection-end-line="114" selection-end-column="25" />
+        <state relative-caret-position="460">
+          <caret line="111" column="31" lean-forward="false" selection-start-line="111" selection-start-column="31" selection-end-line="111" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/generators/app/templates/proxy/default/apiproxy/proxies/default.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
           <folding />
         </state>
       </provider>

@@ -25,7 +25,7 @@ yo openapi-apigee-proxy
 
 ## License
 
-Apache-2.0 © [Chris von See]()
+Apache-2.0 © Google
 
 
 [npm-image]: https://badge.fury.io/js/generator-openapi-apigee-proxy.svg

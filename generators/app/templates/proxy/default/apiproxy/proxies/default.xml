@@ -1,16 +1,4 @@
 <ProxyEndpoint name="default">
-  <FaultRules>
-    <FaultRule name="Generic Fault Handling">
-      <Step>
-        <Name>FlowCallout.common_faulthandling</Name>
-      </Step>
-    </FaultRule>
-  </FaultRules>
-  <DefaultFaultRule name="Default fault handling">
-    <Step>
-      <Name>Default-message</Name>
-    </Step>
-  </DefaultFaultRule>
   <PreFlow>
     <Request>
       <Step>
