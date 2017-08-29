@@ -1,10 +1,8 @@
 <ProxyEndpoint name="default">
   <PreFlow>
     <Request>
-      <Step>
-        <Name>FlowCallout.common_preflow_apikey</Name>
-      </Step>
     </Request>
+    <Response></Response>
   </PreFlow>
   <Flows>
       <Flow name="templateFlow">

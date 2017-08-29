@@ -21,6 +21,14 @@ const pyResourceBase = path.join(resourceBase, "/py");
 const javaResourceBase = path.join(resourceBase, "/java");
 const policyBase = path.join(basePath, '/policies');
 
+var copyFromFileSystem = function (sourcePath, destPath) {
+  try {
+    fse.copySync(sourcePath, destPath);
+  } catch (err) {
+    throw err;
+  }
+}
+
 /**
  * This module is specifically designed to support the auto-creation of proxy code that implements Apigee best
  * practices in the following areas:
@@ -48,6 +56,24 @@ const policyBase = path.join(basePath, '/policies');
  * -- Generating SmartDocs from OpenAPI specs (suggested by Nandan Sridhar)
  * -- Test case generation
  */
+
+var createStep = function (parent, policyName, create, append) {
+  var step = xmlutils.createOrUpdateElement(parent, 'Step', [], create, append);
+  return xmlutils.createOrUpdateElement(step, 'Name', policyName, create, append);
+}
+
+var createRequestStep = function (parent, policyName, create, append) {
+  var request = xmlutils.getElementByPath(parent, 'Request');
+  if (!request) {
+    request = xmlutils.createOrUpdateElement(parent, 'Request', [], create, append);
+  }
+  return createStep(request, policyName, create, append);
+}
+
+var createResponseStep = function (parent, policyName, create, append) {
+  var response = xmlutils.getElementByPath(parent, 'Response');
+  return createStep(request, policyName, create, append);
+}
 
 var updateProxyDescriptor = function (templatePath, templateSourceFile, destPath, fileName, swaggerInfo, cb) {
   var xml = fse.readFileSync(templateSourceFile).toString();
@@ -90,23 +116,36 @@ var createOrUpdateProxyEndpoints = function (templatePath, templateSourceFile, d
       cb(err, null);
     }
 
+    var proxyEndpointElement = xmlutils.getElementByPath(result, '$.ProxyEndpoint');
+
     // Add shared flow stuff
     copyFromFileSystem(
-      path.join(templatePath, sharedFlowBase, sharedFlowPolicies, '/'),
-      path.join(destPath, policyBase)
+      path.join(templatePath, sharedFlowBase, sharedFlowFlows, 'common_faulthandling'),
+      path.join(destPath, sharedFlowBase, 'common_faulthandling')
     );
-    var proxyEndpointElement = xmlutils.getElementByPath(result, '$.ProxyEndpoint');
+    copyFromFileSystem(
+      path.join(templatePath, sharedFlowBase, sharedFlowPolicies, 'FlowCallout.common_faulthandling.xml'),
+      path.join(destPath, policyBase, 'FlowCallout.common_faulthandling.xml')
+    );
     var faultRulesElement = xmlutils.createOrUpdateElement(proxyEndpointElement, 'FaultRules', [], true);
     var faultRuleElement = xmlutils.createOrUpdateElement(faultRulesElement, 'FaultRule', [], true);
     xmlutils.createOrUpdateElementAttribute(faultRuleElement, 'name', 'Generic fault handling', true);
-    var faultRuleStepElement = xmlutils.createOrUpdateElement(faultRuleElement, 'Step', [], true);
-    var faultRuleStepNameElement = xmlutils.createOrUpdateElement(faultRuleStepElement, 'Name',
-      'FlowCallout.common_faulthandling', true);
-    var faultRuleElement = xmlutils.createOrUpdateElement(proxyEndpointElement, 'DefaultFaultRule', [], true, true);
+    createStep(faultRuleElement, 'FlowCallout.common_faulthandling', true, true);
+    faultRuleElement = xmlutils.createOrUpdateElement(proxyEndpointElement, 'DefaultFaultRule', [], true, true);
     xmlutils.createOrUpdateElementAttribute(faultRuleElement, 'name', 'Default fault handling', true);
-    faultRuleStepElement = xmlutils.createOrUpdateElement(faultRuleElement, 'Step', [], true);
-    faultRuleStepNameElement = xmlutils.createOrUpdateElement(faultRuleStepElement, 'Name',
-      'Default-message', true);
+    createStep(faultRuleElement, 'FlowCallout.common_faulthandling', true, true);
+
+    // Add threat protection
+    copyFromFileSystem(
+      path.join(templatePath, sharedFlowBase, sharedFlowFlows, 'common_threatprotection'),
+      path.join(destPath, sharedFlowBase, 'common_threatprotection')
+    );
+    copyFromFileSystem(
+      path.join(templatePath, sharedFlowBase, sharedFlowPolicies, 'FlowCallout.common_threatprotection.xml'),
+      path.join(destPath, policyBase, 'FlowCallout.common_threatprotection.xml')
+    );
+    var preFlowElement = xmlutils.createOrUpdateElement(proxyEndpointElement, 'PreFlow', [], true);
+    createRequestStep(preFlowElement, 'FlowCallout.common_threatprotection', true, true);
 
     // Update flows based on what's in the OpenAPI spec
     var flowsElement = xmlutils.getElementByPath(result, '$.ProxyEndpoint.Flows');
@@ -156,14 +195,6 @@ var createOrUpdateTargetEndpoints = function (templatePath, templateSourceFile, 
   });
 }
 
-var copyFromFileSystem = function (sourcePath, destPath) {
-  try {
-    fse.copySync(sourcePath, destPath);
-  } catch (err) {
-    throw err;
-  }
-}
-
 module.exports = {
   generateProxy: function(templatePath, sourcePath, destPath, swaggerInfo, props, returnCallback) {
 
@@ -189,16 +220,6 @@ module.exports = {
         copyFromFileSystem(
           path.join(sourcePath, resourceBase, '/'),
           path.join(destPath, resourceBase)
-        );
-
-        cb(null);
-      },
-      function (cb) {
-        // If a "sharedflows" directory exists in the template directory, then copy those shared flows too
-        // TODO Consider if we need to add logic to only copy *referenced* shared flows and resources instead of everything in the template.
-        copyFromFileSystem(
-          path.join(templatePath, sharedFlowBase, sharedFlowFlows, '/'),
-          path.join(destPath, sharedFlowBase)
         );
 
         cb(null);
