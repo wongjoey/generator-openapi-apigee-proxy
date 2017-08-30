@@ -67,12 +67,27 @@ var createRequestStep = function (parent, policyName, create, append) {
   if (!request) {
     request = xmlutils.createOrUpdateElement(parent, 'Request', [], create, append);
   }
+  // TODO The current XML library doesn't handle mixed content well.
+  if (Array.isArray(request)) {
+    _.remove(request, (value, index, arr) => {
+      return (typeof value === 'string');
+    });
+  }
   return createStep(request, policyName, create, append);
 }
 
 var createResponseStep = function (parent, policyName, create, append) {
   var response = xmlutils.getElementByPath(parent, 'Response');
-  return createStep(request, policyName, create, append);
+  if (!response) {
+    response = xmlutils.createOrUpdateElement(parent, 'Response', [], create, append);
+  }
+  // TODO The current XML library doesn't handle mixed content well.
+  if (Array.isArray(response)) {
+    _.remove(response, (value, index, arr) => {
+      return (typeof value === 'string');
+    });
+  }
+  return createStep(response, policyName, create, append);
 }
 
 var updateProxyDescriptor = function (templatePath, templateSourceFile, destPath, fileName, swaggerInfo, cb) {
@@ -164,6 +179,17 @@ var createOrUpdateProxyEndpoints = function (templatePath, templateSourceFile, d
         newFlows.push(newFlow);
       });
     });
+
+    // Add a default catch-all flow that throws 404
+    copyFromFileSystem(
+      path.join(templatePath, sharedFlowBase, sharedFlowPolicies, 'RaiseFault.UnknownRequest.xml'),
+      path.join(destPath, policyBase, 'RaiseFault.UnknownRequest.xml')
+    );
+    var newFlow = _.cloneDeep(templateFlow);
+    xmlutils.createOrUpdateElementAttribute(newFlow, 'name', 'catchall_default', true);
+    xmlutils.createOrUpdateElement(newFlow, 'Description', 'Catches requests not caught by other flows.', true);
+    createRequestStep(newFlow, 'RaiseFault.UnknownRequest.xml', true, true);
+    newFlows.push(newFlow);
 
     xmlutils.createOrUpdateElement(flowsElement, 'Flow', newFlows, true);
 

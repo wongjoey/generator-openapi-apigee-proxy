@@ -124,7 +124,7 @@ module.exports = {
   },
 
   createOrUpdateElement: function(parent, elemName, elemContent, create, append) {
-    var newContent = (Array.isArray(elemContent)) ? elemContent : [ elemContent ];
+    var newContent = (Array.isArray(elemContent)) ? elemContent : [elemContent];
 
     if (Array.isArray(parent)) {
       parent.forEach(o => {
@@ -133,8 +133,9 @@ module.exports = {
         }
       });
       // TODO surely lodash or another library has a method for copying elements from one array into another.
+      var newParentEntry;
       if (parent.length == 0) {
-        var newParentEntry = {};
+        newParentEntry = {};
         newParentEntry[elemName] = newContent;
         parent.push(newParentEntry);
       } else {
