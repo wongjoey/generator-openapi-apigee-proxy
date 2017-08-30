@@ -174,7 +174,7 @@ var createOrUpdateProxyEndpoints = function (templatePath, templateSourceFile, d
         var newFlow = _.cloneDeep(templateFlow);
         xmlutils.createOrUpdateElementAttribute(newFlow, 'name', ((newFlows.length) + '_' + pathOperation.verb), true);
         xmlutils.createOrUpdateElement(newFlow, 'Description', pathOperation.description, true);
-        var condition = `((request.verb = \'${pathOperation.verb}\') and (proxy.pathsuffix MatchesPath \'${pathObject.subpath}\'))`
+        var condition = `(request.verb = \"${pathOperation.verb}\") and (proxy.pathsuffix MatchesPath \"${pathObject.subpath}\")`
         xmlutils.createOrUpdateElement(newFlow, 'Condition', condition, true);
         newFlows.push(newFlow);
       });
