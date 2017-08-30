@@ -38,3 +38,4 @@ private*
 .DS_Store
 
 #VS Code config data
+.idea
